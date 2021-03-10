@@ -11,4 +11,4 @@ transitions = {
     'LH': -1.322,
 }
 
-file_name = 'result.xlsx'
+FILE_NAME = 'result.xlsx'

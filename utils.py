@@ -3,7 +3,7 @@ from decimal import Decimal
 import xlsxwriter
 from typing import List
 
-from constants import file_name
+from constants import FILE_NAME
 
 
 def to_decimal(num: float) -> Decimal:
@@ -28,7 +28,7 @@ def to_xlsx(matrix: List[list], seq: str, best: List[str], result: float) -> str
     """
     Write results to xlsx file
     """
-    workbook = xlsxwriter.Workbook(file_name)
+    workbook = xlsxwriter.Workbook(FILE_NAME)
     worksheet = workbook.add_worksheet()
     worksheet.write_row(0, 1, seq)
     worksheet.write_column(1, 0, ['H', 'L'])
@@ -38,4 +38,4 @@ def to_xlsx(matrix: List[list], seq: str, best: List[str], result: float) -> str
     worksheet.write_string(5, 4, 'Result:')
     worksheet.write_number(5, 5, result)
     workbook.close()
-    return file_name
+    return FILE_NAME
