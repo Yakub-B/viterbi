@@ -4,7 +4,7 @@ Installation:
 ```shell
 git clone https://github.com/Yakub-B/viterbi.git
 cd viterbi/
-python3 -m venv env && source .env/bin/activae
+python3 -m venv env && source env/bin/activate
 pip install -r requirements.txt
 ```
 Run:
