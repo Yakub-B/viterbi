@@ -1,28 +1,7 @@
-from decimal import Decimal
+from sys import argv
 
-import xlsxwriter
-
-sequence = 'GGCACTGAA'
-
-constantsHL = {
-    'H': {'A': -2.322, 'C': -1.737, 'G': -1.737, 'T': -2.322},
-    'L': {'A': -1.737, 'C': -2.322, 'G': -2.322, 'T': -1.737},
-}
-
-transitions = {
-    'start': -1,
-    'HH': -1,
-    'LL': -0.737,
-    'HL': -1,
-    'LH': -1.322,
-}
-
-
-def to_decimal(num: float) -> Decimal:
-    """
-    Rounds float to decimal number with 3 decimal places
-    """
-    return Decimal("{:.3f}".format(num))
+from constants import transitions, constantsHL
+from utils import to_decimal, to_xlsx, to_pretty
 
 
 def setup_matrix(seq: str) -> list:
@@ -65,34 +44,12 @@ def calculate(const_hl: dict, transitions_: dict, matrix: list, seq: str) -> tup
     return matrix, best, 2 ** result_value
 
 
-def to_pretty(matrix: list) -> list:
-    """
-    Matrix with floats to matrix in Decimals
-    """
-    for row_idx, row in enumerate(matrix):
-        for elem_idx, elem in enumerate(row):
-            matrix[row_idx][elem_idx] = to_decimal(elem)
-
-    return matrix
-
-
-def to_xlsx(matrix, seq, best, result):
-    """
-    Write results to xlsx file
-    """
-    workbook = xlsxwriter.Workbook('bi.xlsx')
-    worksheet = workbook.add_worksheet()
-    worksheet.write_row(0, 1, seq)
-    worksheet.write_column(1, 0, ['H', 'L'])
-    for row, data in enumerate(matrix):
-        worksheet.write_row(row + 1, 1, data)
-    worksheet.write_row(3, 1, best)
-    worksheet.write_string(5, 4, 'Result:')
-    worksheet.write_number(5, 5, result)
-    workbook.close()
-
-
 def main():
+    try:
+        sequence = argv[1]
+    except IndexError:
+        sequence = input('Input sequence: ')
+
     matrix = setup_matrix(sequence)
     calculated, best, result = calculate(constantsHL, transitions, matrix, sequence)
     pretty = to_pretty(calculated)
