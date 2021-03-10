@@ -10,3 +10,5 @@ transitions = {
     'HL': -1,
     'LH': -1.322,
 }
+
+file_name = 'result.xlsx'

@@ -53,7 +53,8 @@ def main():
     matrix = setup_matrix(sequence)
     calculated, best, result = calculate(constantsHL, transitions, matrix, sequence)
     pretty = to_pretty(calculated)
-    to_xlsx(pretty, sequence, best, result)
+    file = to_xlsx(pretty, sequence, best, result)
+    print(f'Successfully calculated! Look for the result in {file}')
 
 
 if __name__ == '__main__':
